@@ -4,9 +4,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import lombok.Data;
 
 import java.util.List;
-
+@Data
 @Entity
 public class Karticka {
     @Id
@@ -22,27 +23,4 @@ public class Karticka {
     @ManyToOne
     private Uzivatel uzivatel;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Kurz getCourse() {
-        return course;
-    }
-
-    public void setCourse(Kurz course) {
-        this.course = course;
-    }
-
-    public Uzivatel getUzivatel() {
-        return uzivatel;
-    }
-
-    public void setUzivatel(Uzivatel uzivatel) {
-        this.uzivatel = uzivatel;
-    }
 }

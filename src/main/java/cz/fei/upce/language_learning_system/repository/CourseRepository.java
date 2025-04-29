@@ -1,4 +1,4 @@
-package cz.fei.upce.language_learning_system.controller;
+package cz.fei.upce.language_learning_system.repository;
 
 
 import cz.fei.upce.language_learning_system.entity.Kurz;

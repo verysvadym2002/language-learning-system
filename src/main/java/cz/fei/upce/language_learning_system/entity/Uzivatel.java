@@ -1,15 +1,20 @@
 package cz.fei.upce.language_learning_system.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-
+@Data
 @Entity
-public class Uzivatel {
+public class Uzivatel implements UserDetails {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String userName;
@@ -25,13 +30,6 @@ public class Uzivatel {
             inverseJoinColumns = @JoinColumn(name = "course_id"))
     private Set<Kurz> courses;
 
-    public Set<Kurz> getCourses() {
-        return courses;
-    }
-
-    public void setCourses(Set<Kurz> likedUsers) {
-        this.courses = likedUsers;
-    }
 
     @ManyToMany
     @JoinTable(
@@ -40,30 +38,21 @@ public class Uzivatel {
             inverseJoinColumns = @JoinColumn(name = "test_id"))
     private Set<Test> tests;
 
-    public Set<Test> getTests() {
-        return tests;
-    }
-
-    public void setTests(Set<Test> tests) {
-        this.tests = tests;
-    }
-
     @OneToMany(mappedBy = "uzivatel")
     private List<Karticka> cards;
 
-    public List<Karticka> getCards() {
-        return cards;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
     }
 
-    public void setCards(List<Karticka> cards) {
-        this.cards = cards;
+    @Override
+    public String getUsername() {
+        return userName;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    @Override
+    public String getPassword() {
+        return password;
     }
 }

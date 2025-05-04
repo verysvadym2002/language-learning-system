@@ -1,5 +1,6 @@
 package cz.fei.upce.language_learning_system.entity;
 
+import cz.fei.upce.language_learning_system.dto.UzivatelResponseDto;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -54,5 +55,13 @@ public class Uzivatel implements UserDetails {
     @Override
     public String getPassword() {
         return password;
+    }
+
+    public UzivatelResponseDto toResponseDto() {
+        return new UzivatelResponseDto(
+                id,
+                userName,
+                email
+        );
     }
 }

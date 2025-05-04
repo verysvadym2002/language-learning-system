@@ -1,28 +1,30 @@
 package cz.fei.upce.language_learning_system.controller;
 
+import cz.fei.upce.language_learning_system.entity.Uzivatel;
 import cz.fei.upce.language_learning_system.entity.dTo.LoginUserDto;
 import cz.fei.upce.language_learning_system.entity.dTo.RegisterUserDto;
-import cz.fei.upce.language_learning_system.repository.UserRepository;
 import cz.fei.upce.language_learning_system.service.AuthService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/auth")
-@RequiredArgsConstructor
 public class AuthController {
+
     private final AuthService authService;
 
     @PostMapping("/register")
-    public void register(@RequestBody RegisterUserDto registerUserDto) {
-        authService.signup(registerUserDto);
+    public ResponseEntity<?> register(@RequestBody RegisterUserDto registerUserDto) {
+        Uzivatel user = authService.signup(registerUserDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(user.toResponseDto());
     }
 
     @PostMapping("/login")
-    public void login(@RequestBody LoginUserDto loginUserDto) {
-        authService.authenticate(loginUserDto);
+    public ResponseEntity<?> login(@RequestBody LoginUserDto loginUserDto) {
+        Uzivatel user = authService.authenticate(loginUserDto);
+        return ResponseEntity.ok(user.toResponseDto());
     }
 }

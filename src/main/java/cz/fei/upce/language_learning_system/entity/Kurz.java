@@ -1,5 +1,6 @@
 package cz.fei.upce.language_learning_system.entity;
 
+import cz.fei.upce.language_learning_system.dto.KurzResponseDto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
@@ -29,5 +30,13 @@ public class Kurz {
 
     @OneToMany(mappedBy = "course")
     private List<Test> tests;
+
+    public KurzResponseDto toResponseDto() {
+        return new KurzResponseDto(
+                this.id,
+                this.language,
+                this.description
+        );
+    }
 
 }

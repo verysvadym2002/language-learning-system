@@ -59,9 +59,9 @@ public class Uzivatel implements UserDetails {
 
     public UzivatelResponseDto toResponseDto() {
         return new UzivatelResponseDto(
-                id,
-                userName,
-                email
+                this.id,
+                this.userName,
+                this.email
         );
     }
 }

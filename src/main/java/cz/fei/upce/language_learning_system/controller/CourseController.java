@@ -1,5 +1,7 @@
 package cz.fei.upce.language_learning_system.controller;
 
+import cz.fei.upce.language_learning_system.dto.KurzRequestDto;
+import cz.fei.upce.language_learning_system.dto.KurzResponseDto;
 import cz.fei.upce.language_learning_system.entity.Kurz;
 import cz.fei.upce.language_learning_system.service.CourseService;
 import lombok.RequiredArgsConstructor;
@@ -27,14 +29,22 @@ public class CourseController {
     }
 
     @PostMapping
-    public ResponseEntity<Kurz> createCourse(@RequestBody Kurz kurz) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(courseService.save(kurz));
+    public ResponseEntity<KurzResponseDto> createCourse(@RequestBody KurzRequestDto courseRequestDto) {
+        Kurz course = new Kurz();
+        course.setLanguage(courseRequestDto.getLanguage());
+        course.setDescription(courseRequestDto.getDescription());
+        Kurz savedCourse = courseService.save(course);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedCourse.toResponseDto());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Kurz> updateCourse(@PathVariable Long id, @RequestBody Kurz kurz) {
-        kurz.setId(id);
-        return ResponseEntity.ok(courseService.update(kurz));
+    public ResponseEntity<KurzResponseDto> updateCourse(@PathVariable Long id, @RequestBody KurzRequestDto courseRequestDto) {
+        Kurz course = new Kurz();
+        course.setId(id);
+        course.setLanguage(courseRequestDto.getLanguage());
+        course.setDescription(courseRequestDto.getDescription());
+        Kurz updatedCourse = courseService.update(course);
+        return ResponseEntity.ok(updatedCourse.toResponseDto());
     }
 
     @DeleteMapping("/{id}")

@@ -1,5 +1,7 @@
 package cz.fei.upce.language_learning_system.controller;
 
+import cz.fei.upce.language_learning_system.dto.UzivatelRequestDto;
+import cz.fei.upce.language_learning_system.dto.UzivatelResponseDto;
 import cz.fei.upce.language_learning_system.entity.Uzivatel;
 import cz.fei.upce.language_learning_system.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -27,16 +29,25 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<Uzivatel> createUser(@RequestBody Uzivatel user) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
+    public ResponseEntity<UzivatelResponseDto> createUser(@RequestBody UzivatelRequestDto userRequestDto) {
+        Uzivatel user = new Uzivatel();
+        user.setUserName(userRequestDto.getUserName());
+        user.setEmail(userRequestDto.getEmail());
+        user.setPassword(userRequestDto.getPassword());
+        Uzivatel savedUser = userService.save(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedUser.toResponseDto());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Uzivatel> updateUser(@PathVariable Long id, @RequestBody Uzivatel user) {
+    public ResponseEntity<UzivatelResponseDto> updateUser(@PathVariable Long id, @RequestBody UzivatelRequestDto userRequestDto) {
+        Uzivatel user = new Uzivatel();
         user.setId(id);
-        return ResponseEntity.ok(userService.update(user));
+        user.setUserName(userRequestDto.getUserName());
+        user.setEmail(userRequestDto.getEmail());
+        user.setPassword(userRequestDto.getPassword());
+        Uzivatel updatedUser = userService.update(user);
+        return ResponseEntity.ok(updatedUser.toResponseDto());
     }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.delete(id);

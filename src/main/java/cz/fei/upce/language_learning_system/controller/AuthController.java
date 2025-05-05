@@ -4,6 +4,7 @@ import cz.fei.upce.language_learning_system.entity.Uzivatel;
 import cz.fei.upce.language_learning_system.entity.dTo.LoginUserDto;
 import cz.fei.upce.language_learning_system.entity.dTo.RegisterUserDto;
 import cz.fei.upce.language_learning_system.service.AuthService;
+import cz.fei.upce.language_learning_system.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthService authService;
+    private final JwtService jwtService;
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterUserDto registerUserDto) {
@@ -25,6 +27,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginUserDto loginUserDto) {
         Uzivatel user = authService.authenticate(loginUserDto);
-        return ResponseEntity.ok(user.toResponseDto());
+        String jwtToken = jwtService.generateToken(user);
+        return ResponseEntity.ok(jwtToken);
     }
 }

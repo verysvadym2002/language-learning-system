@@ -1,6 +1,6 @@
 import Navbar from './Navbar'
 
-const About = () => {
+const Courses = () => {
     return (
         <div>
             <Navbar />
@@ -9,4 +9,4 @@ const About = () => {
     )
 }
 
-export default About
+export default Courses

@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { Link } from "react-router-dom";
 
 const pages = ['Kurzy', 'Kartičky', 'Uživatele'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -85,11 +86,10 @@ const AppNavBar = () => {
     onClose={handleCloseNavMenu}
     sx={{ display: { xs: 'block', md: 'none' } }}
 >
-    {pages.map((page) => (
-        <MenuItem key={page} onClick={handleCloseNavMenu}>
-    <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
+        <MenuItem onClick={handleCloseNavMenu}>
+    <Typography sx={{ textAlign: 'center' }}>kurzy</Typography>
     </MenuItem>
-    ))}
+
     </Menu>
     </Box>
     <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -112,15 +112,14 @@ const AppNavBar = () => {
     LOGO
     </Typography>
     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-    {pages.map((page) => (
+    <Link to="/courses">
         <Button
-            key={page}
-        onClick={handleCloseNavMenu}
         sx={{ my: 2, color: 'white', display: 'block' }}
     >
-        {page}
+        Kurzy
         </Button>
-    ))}
+    </Link>
+
     </Box>
     <Box sx={{ flexGrow: 0 }}>
     <Tooltip title="Open settings">

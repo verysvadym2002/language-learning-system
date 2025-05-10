@@ -120,6 +120,22 @@ const AppNavBar = () => {
         </Button>
     </Link>
 
+        <Link to="/cards">
+            <Button
+                sx={{ my: 2, color: 'white', display: 'block' }}
+            >
+                Kartičky
+            </Button>
+        </Link>
+
+        <Link to="/users">
+            <Button
+                sx={{ my: 2, color: 'white', display: 'block' }}
+            >
+                Uživatele
+            </Button>
+        </Link>
+
     </Box>
     <Box sx={{ flexGrow: 0 }}>
     <Tooltip title="Open settings">

@@ -1,7 +1,21 @@
 import {FormInputText} from "./components/FormInputText.tsx";
 import {Button} from "@mui/material";
+import axios from "axios";
+import {useForm} from "react-hook-form";
 
 const LoginPage = () => {
+    const {control, handleSubmit} = useForm();
+
+    const onSubmit = async (data: any) => {
+
+        try {
+            const response = await axios.post("http://localhost:8080/api/auth/login", data);
+            console.log("Response:", response.data);
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    };
+
     return (
         <div className="App" style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "100vh", width: "100vw", backgroundColor: "#ffffff", textAlign: "center" }}>
 

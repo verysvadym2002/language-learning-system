@@ -1,3 +1,5 @@
+import AppNavBar from "./AppBar.tsx";
+
 const Cards = () => {
     return (
         <div>

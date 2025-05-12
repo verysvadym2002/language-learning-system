@@ -6,8 +6,9 @@ import axios from "axios";
 import AppNavBar from "./AppBar.tsx";
 import Courses from "./Courses.tsx";
 import {Route, Routes } from "react-router-dom";
-import Contact from "./Contact.tsx";
 import Home from "./Home.tsx";
+import Cards from "./Cards.tsx";
+import Users from "./Users.tsx";
 
 const App = () => {
 
@@ -17,7 +18,8 @@ const App = () => {
             <Routes>
                 <Route path='/' element={<Home/>} />
                 <Route path='/courses' element={<Courses/>} />
-                <Route path='/contact' element={<Contact/>} />
+                <Route path='/cards' element={<Cards/>} />
+                <Route path='/users' element={<Users/>} />
             </Routes>
         </div>
     );

@@ -26,7 +26,8 @@ export default function CoursesTable() {
     const fetchCourses = () => {
         axios.get("/api/courses")
             .then((response) => {
-                setCourses(response.data); // Update state with fetched data
+                const data = response.data;
+                setCourses(Array.isArray(data) ? data : []); // Ensure data is an array
             })
             .catch((err) => {
                 console.error("Error fetching courses:", err);
@@ -62,7 +63,7 @@ export default function CoursesTable() {
                                 {error}
                             </TableCell>
                         </TableRow>
-                    ) : (
+                    ) : courses.length > 0 ? (
                         courses.map((course) => (
                             <TableRow
                                 key={course.id}
@@ -90,6 +91,12 @@ export default function CoursesTable() {
                                 </TableCell>
                             </TableRow>
                         ))
+                    ) : (
+                        <TableRow>
+                            <TableCell colSpan={2} style={{ textAlign: "center" }}>
+                                No courses available.
+                            </TableCell>
+                        </TableRow>
                     )}
                 </TableBody>
             </Table>

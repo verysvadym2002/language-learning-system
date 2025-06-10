@@ -9,6 +9,7 @@ import LoginPage from "./LoginPage.tsx";
 
 const App = () => {
     const navigate = useNavigate();
+    const authToken = localStorage.getItem("authToken"); // Check if the user is authenticated
 
     const handleLogout = () => {
         localStorage.removeItem("authToken"); // Clear token from localStorage
@@ -18,9 +19,11 @@ const App = () => {
     return (
         <div className="App" style={{ display: "flex", flexDirection: "column", height: "100vh", width: "100vw", backgroundColor: "#ffffff", textAlign: "center" }}>
             <AppNavBar />
-            <button onClick={handleLogout} style={{ position: "absolute", top: "1rem", right: "1rem" }}>
-                Logout
-            </button>
+            {authToken && ( // Conditionally render the Logout button
+                <button onClick={handleLogout} style={{ position: "absolute", top: "1rem", right: "1rem" }}>
+                    Logout
+                </button>
+            )}
             <Routes>
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/" element={<Home />} />

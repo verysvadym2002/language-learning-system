@@ -1,6 +1,6 @@
 package cz.fei.upce.language_learning_system.service;
 
-
+import cz.fei.upce.language_learning_system.entity.Role;
 import cz.fei.upce.language_learning_system.entity.Uzivatel;
 import cz.fei.upce.language_learning_system.entity.dTo.LoginUserDto;
 import cz.fei.upce.language_learning_system.entity.dTo.RegisterUserDto;
@@ -33,6 +33,7 @@ public class AuthService {
         user.setUserName(input.getUserName());
         user.setEmail(input.getEmail());
         user.setPassword(passwordEncoder.encode(input.getPassword()));
+        user.setRole(Role.USER);
 
         return userRepository.save(user);
     }

@@ -24,6 +24,9 @@ public class Uzivatel implements UserDetails {
 
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    private Role role; // Added role field
+
     @ManyToMany
     @JoinTable(
             name = "courses_users",

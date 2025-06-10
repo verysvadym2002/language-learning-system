@@ -1,59 +1,96 @@
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import { useEffect, useState } from "react";
+import axios from "axios";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
 
-function createData(
-    name: string,
-) {
-    return { name };
-}
+type Course = {
+    id: number;
+    language: string;
+    description: string;
+};
 
-const rows = [
-    createData('Čeština A1'),
-    createData('Čeština A2'),
-    createData('Čeština B1'),
-    createData('Čeština B2'),
-    createData('Čeština C1'),
-    createData('Angličtina A1'),
-    createData('Angličtina A2'),
-    createData('Angličtina B1'),
-    createData('Angličtina B2'),
-    createData('Angličtina C1'),
-    createData('Němčina A1'),
-    createData('Němčina A2'),
-    createData('Němčina B1'),
-    createData('Němčina B2'),
-    createData('Němčina C1'),
-    createData('Nizozemština A1'),
-    createData('Nizozemština A2'),
-    createData('Nizozemština B1'),
-    createData('Nizozemština B2'),
-];
+export default function CoursesTable() {
+    const [courses, setCourses] = useState<Course[]>([]); // State to store fetched courses
+    const [error, setError] = useState<string | null>(null); // State to store any errors
 
-export default function BasicTable() {
+    useEffect(() => {
+        fetchCourses();
+    }, []);
+
+    const fetchCourses = () => {
+        axios.get("/api/courses")
+            .then((response) => {
+                setCourses(response.data); // Update state with fetched data
+            })
+            .catch((err) => {
+                console.error("Error fetching courses:", err);
+                setError("Failed to load courses"); // Set error message
+            });
+    };
+
+    const handleDelete = (id: number) => {
+        axios.delete(`/api/courses/${id}`)
+            .then(() => {
+                alert("Course deleted successfully!");
+                fetchCourses();
+            })
+            .catch((err) => {
+                console.error("Error deleting course:", err);
+                alert("Failed to delete course.");
+            });
+    };
+
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                     <TableRow>
                         <TableCell>Available Courses</TableCell>
+                        <TableCell>Actions</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map((row) => (
-                        <TableRow
-                            key={row.name}
-                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                        >
-                            <TableCell component="th" scope="row">
-                                {row.name}
+                    {error ? (
+                        <TableRow>
+                            <TableCell colSpan={2} style={{ color: "red" }}>
+                                {error}
                             </TableCell>
                         </TableRow>
-                    ))}
+                    ) : (
+                        courses.map((course) => (
+                            <TableRow
+                                key={course.id}
+                                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                            >
+                                <TableCell component="th" scope="row">
+                                    {course.language} - {course.description}
+                                </TableCell>
+                                <TableCell>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={() => alert("Edit functionality not implemented yet")}
+                                    >
+                                        Edit
+                                    </Button>
+
+                                    <Button
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={() => handleDelete(course.id)}
+                                    >
+                                        Delete
+                                    </Button>
+                                </TableCell>
+                            </TableRow>
+                        ))
+                    )}
                 </TableBody>
             </Table>
         </TableContainer>

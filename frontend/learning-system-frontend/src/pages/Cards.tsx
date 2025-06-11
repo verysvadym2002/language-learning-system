@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import AddCardForm from "./components/AddCardForm";
+import AddCardForm from "../components/AddCardForm.tsx";
 
 type Card = {
     id: number;
@@ -30,6 +30,7 @@ const Cards = ({ courseId }: { courseId: number }) => {
         fetch(`/api/cards?courseId=${courseId}`)
             .then((res) => res.json())
             .then((data) => setCards(data));
+
     };
 
     return (

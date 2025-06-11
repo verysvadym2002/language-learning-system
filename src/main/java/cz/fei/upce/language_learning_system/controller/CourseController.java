@@ -2,9 +2,10 @@ package cz.fei.upce.language_learning_system.controller;
 
 import cz.fei.upce.language_learning_system.dto.KurzRequestDto;
 import cz.fei.upce.language_learning_system.dto.KurzResponseDto;
-import cz.fei.upce.language_learning_system.entity.Kurz;
 import cz.fei.upce.language_learning_system.service.CourseService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,32 +20,31 @@ public class CourseController {
     private final CourseService courseService;
 
     @GetMapping
-    public List<Kurz> getAllCourses() {
+    public List<KurzResponseDto> getAllCourses() {
         return courseService.findAll();
     }
 
+    @GetMapping("/paged")
+    public ResponseEntity<Page<KurzResponseDto>> getCourses(Pageable pageable) {
+        Page<KurzResponseDto> courses = courseService.findAll(pageable);
+        return ResponseEntity.ok(courses);
+    }
+
     @GetMapping("/{id}")
-    public ResponseEntity<Kurz> getCourseById(@PathVariable Long id) {
+    public ResponseEntity<KurzResponseDto> getCourseById(@PathVariable Long id) {
         return ResponseEntity.ok(courseService.findById(id));
     }
 
     @PostMapping
     public ResponseEntity<KurzResponseDto> createCourse(@RequestBody KurzRequestDto courseRequestDto) {
-        Kurz course = new Kurz();
-        course.setLanguage(courseRequestDto.getLanguage());
-        course.setDescription(courseRequestDto.getDescription());
-        Kurz savedCourse = courseService.save(course);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedCourse.toResponseDto());
+        KurzResponseDto savedCourse = courseService.save(courseRequestDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedCourse);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<KurzResponseDto> updateCourse(@PathVariable Long id, @RequestBody KurzRequestDto courseRequestDto) {
-        Kurz course = new Kurz();
-        course.setId(id);
-        course.setLanguage(courseRequestDto.getLanguage());
-        course.setDescription(courseRequestDto.getDescription());
-        Kurz updatedCourse = courseService.update(course);
-        return ResponseEntity.ok(updatedCourse.toResponseDto());
+        KurzResponseDto updatedCourse = courseService.update(courseRequestDto, id);
+        return ResponseEntity.ok(updatedCourse);
     }
 
     @DeleteMapping("/{id}")

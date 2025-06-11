@@ -1,5 +1,5 @@
-import AddCourseForm from "./components/AddCourseForm";
-import CoursesTable from "./components/CoursesTable";
+import AddCourseForm from "../components/AddCourseForm.tsx";
+import CoursesTable from "../components/CoursesTable.tsx";
 
 const Courses = () => {
     return (

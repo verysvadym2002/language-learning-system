@@ -6,7 +6,7 @@ const AddCardForm = ({ courseId, onCardAdded }: { courseId: number; onCardAdded:
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const response = await fetch(`/api/cards/`, {
+        const response = await fetch(`http://localhost:8080/api/cards/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

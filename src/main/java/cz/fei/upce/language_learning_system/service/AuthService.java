@@ -30,7 +30,7 @@ public class AuthService {
 
     public Uzivatel signup(RegisterUserDto input) {
         Uzivatel user = new Uzivatel();
-        user.setUserName(input.getUserName());
+        user.setUserName(input.getUsername());
         user.setEmail(input.getEmail());
         user.setPassword(passwordEncoder.encode(input.getPassword()));
         user.setRole(Role.USER);

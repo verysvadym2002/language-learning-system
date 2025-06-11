@@ -1,11 +1,11 @@
 import "./styles.css";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import AppNavBar from "./AppBar.tsx";
-import Home from "./Home.tsx";
-import Courses from "./Courses.tsx";
-import Cards from "./Cards.tsx";
-import Users from "./Users.tsx";
-import LoginPage from "./LoginPage.tsx";
+import AppNavBar from "./components/AppBar.tsx";
+import Home from "./pages/Home.tsx";
+import Courses from "./pages/Courses.tsx";
+import Cards from "./pages/Cards.tsx";
+import Users from "./pages/Users.tsx";
+import LoginPage from "./pages/LoginPage.tsx";
 
 const App = () => {
     const navigate = useNavigate();
